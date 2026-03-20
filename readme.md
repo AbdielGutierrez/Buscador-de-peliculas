@@ -8,6 +8,7 @@ Script de terminal en Python para buscar y descargar películas del catálogo de
 
 - Python 3.x
 - Instalar dependencias:
+- Crear python -m venv venv
 
 ```bash
 pip install -r requirements.txt
