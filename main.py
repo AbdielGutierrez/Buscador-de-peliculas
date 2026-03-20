@@ -74,7 +74,7 @@ def descargar_archivo(url, nombre_archivo, destino):
 
 def main():
     print("=" * 50)
-    print("       BUSCADOR DE PELICULAS - UCLV")
+    print("       BUSCADOR DE PELICULAS       ")
     print("=" * 50)
 
     # Paso 1: obtener año
