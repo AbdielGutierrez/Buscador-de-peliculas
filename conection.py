@@ -10,7 +10,7 @@ def conection(url):
     Retorna una lista de items o None si falla.
     """
     try:
-        response = requests.get(url, timeout=10)
+        response = requests.get(url, timeout=1000)
         response.raise_for_status()
     except requests.exceptions.ConnectionError:
         print("[Error] No se pudo conectar al servidor. Verifique su conexión a internet.")
@@ -52,11 +52,13 @@ def conection(url):
 
 def conection_files(url):
     """
-    Busca archivos .mp4 y .srt dentro de la URL de una película.
-    Retorna un diccionario con las claves 'mp4' y 'srt' (o None si no se encuentra).
+    Busca archivos de video (.mp4, .avi, .mkv) y subtítulos (.srt) dentro de la URL de una película.
+    Retorna un diccionario con las claves 'video' y 'srt' (o None si falla).
     """
+    FORMATOS_VIDEO = (".mp4", ".avi", ".mkv")
+
     try:
-        response = requests.get(url, timeout=10)
+        response = requests.get(url, timeout=1000)
         response.raise_for_status()
     except requests.exceptions.ConnectionError:
         print("[Error] No se pudo conectar al servidor.")
@@ -80,12 +82,12 @@ def conection_files(url):
             return None
 
         links = table.find_all("a")
-        archivos = {"mp4": None, "srt": None}
+        archivos = {"video": None, "srt": None}
 
         for link in links:
             nombre = link.text.strip()
-            if nombre.lower().endswith(".mp4"):
-                archivos["mp4"] = nombre
+            if nombre.lower().endswith(FORMATOS_VIDEO):
+                archivos["video"] = nombre
             elif nombre.lower().endswith(".srt"):
                 archivos["srt"] = nombre
 

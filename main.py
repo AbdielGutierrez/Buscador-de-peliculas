@@ -44,7 +44,7 @@ def descargar_archivo(url, nombre_archivo, destino):
     print(f"Descargando: {nombre_archivo}")
 
     try:
-        response = requests.get(url, stream=True, timeout=30)
+        response = requests.get(url, stream=True, timeout=1000)
         response.raise_for_status()
 
         total = int(response.headers.get("content-length", 0))
@@ -106,17 +106,17 @@ def main():
     if archivos is None:
         return
 
-    if not archivos["mp4"] and not archivos["srt"]:
-        print("[Aviso] No se encontraron archivos .mp4 ni .srt en esta película.")
+    if not archivos["video"] and not archivos["srt"]:
+        print("[Aviso] No se encontraron archivos de video ni .srt en esta película.")
         print(f"Puede acceder manualmente en: {url_pelicula}")
         return
 
     # Paso 5: mostrar archivos encontrados y confirmar descarga
     print("\nArchivos encontrados:")
-    if archivos["mp4"]:
-        print(f"  [mp4] {archivos['mp4']}")
+    if archivos["video"]:
+        print(f"  [video] {archivos['video']}")
     else:
-        print("  [mp4] No encontrado")
+        print("  [video] No encontrado")
 
     if archivos["srt"]:
         print(f"  [srt] {archivos['srt']}")
@@ -132,9 +132,9 @@ def main():
     # Paso 6: descargar archivos
     print(f"\nGuardando en: {DOWNLOADS_FOLDER}\n")
 
-    if archivos["mp4"]:
-        url_mp4 = f"{url_pelicula}{archivos['mp4'].replace(' ', '%20')}"
-        descargar_archivo(url_mp4, archivos["mp4"], DOWNLOADS_FOLDER)
+    if archivos["video"]:
+        url_video = f"{url_pelicula}{archivos['video'].replace(' ', '%20')}"
+        descargar_archivo(url_video, archivos["video"], DOWNLOADS_FOLDER)
 
     if archivos["srt"]:
         url_srt = f"{url_pelicula}{archivos['srt'].replace(' ', '%20')}"
